@@ -210,7 +210,8 @@ enum OptionType {
     PollTimer,
     NoRealPath,
     TranslationUnitCache,
-    Noop
+    Noop,
+    NoCompileCommandsWatch
 };
 
 int main(int argc, char** argv)
@@ -371,7 +372,8 @@ int main(int argc, char** argv)
         { NoRealPath, "no-realpath", 0, CommandLineParser::NoValue, "Don't use realpath(3) for files" },
         { TranslationUnitCache, "translation-unit-cache", 0, CommandLineParser::NoValue, "Cache translation units. Not working yet." },
         { Noop, "config", 'c', CommandLineParser::Required, "Use this file (instead of ~/.rdmrc)." },
-        { Noop, "no-rc", 'N', CommandLineParser::NoValue, "Don't load any rc files." }
+        { Noop, "no-rc", 'N', CommandLineParser::NoValue, "Don't load any rc files." },
+        { NoCompileCommandsWatch, "no-compilecommands-watch", 0, CommandLineParser::NoValue, "Don't watch compile commands" }
     };
 
     std::function<CommandLineParser::ParseStatus(OptionType type, String &&value, size_t &idx, const List<String> &args)> cb;
@@ -727,6 +729,9 @@ int main(int argc, char** argv)
             break; }
         case TranslationUnitCache: {
             serverOpts.options |= Server::TranslationUnitCache;
+            break; }
+        case NoCompileCommandsWatch: {
+            serverOpts.options |= Server::NoCompileCommandsWatch;
             break; }
         }
 

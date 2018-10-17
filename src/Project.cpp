@@ -378,8 +378,9 @@ bool Project::init()
         Sandbox::decode(mVisitedFiles);
     }
     file >> mDiagnostics;
-    for (const auto &info : mIndexParseData.compileCommands)
-        watch(Location::path(info.first).parentDir(), Watch_CompileCommands);
+    if (!(options.options & Server::NoFileSystemWatch))
+        for (const auto &info : mIndexParseData.compileCommands)
+            watch(Location::path(info.first).parentDir(), Watch_CompileCommands);
 
     if (!loadDependencies(file, mDependencies)) {
         mDependencies.deleteAll();
