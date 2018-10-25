@@ -378,7 +378,7 @@ bool Project::init()
         Sandbox::decode(mVisitedFiles);
     }
     file >> mDiagnostics;
-    if (!(options.options & Server::NoFileSystemWatch))
+    if (!(options.options & Server::NoCompileCommandsWatch))
         for (const auto &info : mIndexParseData.compileCommands)
             watch(Location::path(info.first).parentDir(), Watch_CompileCommands);
 
